@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../partials/head %>
+</head>
+
+<body class="container">
+    <script>
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId: '1333030356778680',
+                xfbml: true,
+                version: 'v2.9'
+            });
+            FB.getLoginStatus(function(response) {
+                if (response.status === 'connected') {
+                    console.log('Logged in.');
+                } else {
+                    FB.login();
+                }
+            });
+            FB.AppEvents.logPageView();
+        };
+
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {
+                return;
+            }
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+
+    <header>
+        <% include ../partials/header %>
+    </header>
+<div id="status"></div>
+    <main>
+        <div class="row">
+            <% grams.forEach(function(gram) { %>
+                <div class="instagram-pic col-sm-3">
+
+                    <a href="<%= gram.link %>" target="_blank">
+				<img src="<%= gram.images.standard_resolution.url %>" class="img-responsive">
+			</a>
+
+                    <div class="instagram-bar">
+                        <div class="likes">
+                            <span class="glyphicon glyphicon-heart"></span>
+                            <%= gram.likes.count %>
+                        </div>
+
+                        <div class="comments">
+                            <span class="glyphicon glyphicon-comment"></span>
+                            <%= gram.comments.count %>
+                        </div>
+                    </div>
+
+                </div>
+                <% }); %>
+        </div>
+    </main>
+
+    <footer>
+        <% include ../partials/footer %>
+    </footer>
+
+</body>
+
+</html>
